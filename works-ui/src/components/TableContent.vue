@@ -441,6 +441,8 @@ export default defineComponent({
         this.dataList.forEach((value, index, array) => {
           this.dataList[index].key = index;
         });
+      } else {
+        this.dataList = [];
       }
 
       // tooltip action버튼 리로드 시 시간차가 필요함.

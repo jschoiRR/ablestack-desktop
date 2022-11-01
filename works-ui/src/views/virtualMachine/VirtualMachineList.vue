@@ -162,7 +162,6 @@ export default defineComponent({
           title: this.$t("label.name"),
           dataIndex: "name",
           key: "name",
-          
           // slots: {
           //   customRender: "nameRender",
           //   filterDropdown: "filterDropdown",
@@ -316,6 +315,8 @@ export default defineComponent({
               this.vmDataList.forEach((value, index, array) => {
                 this.vmDataList[index].key = index;
               });
+            } else {
+              this.vmDataList = [];
             }
           } else {
             this.$message.error(this.$t("message.response.data.fail"));
