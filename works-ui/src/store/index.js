@@ -21,7 +21,7 @@ export default createStore({
     },
     menukey: 0,
     client: {
-      scale: 1,
+      scale: 0,
       minScale: 0,
       maxScale: 3,
     },

@@ -24,10 +24,11 @@ try {
   // configDev.save(".env.development");
 } catch (err) {
   // console.log(err);
-  const version = 'Cerato-v3.0.0'
-  const m = new Date()
-  const date = m.getFullYear() + ('0' + (m.getMonth() + 1)).slice(-2) + ('0' + m.getDate()).slice(-2)
+  const version = "Cerato-v3.0.0";
+  const m = new Date();
+  const date = m.getFullYear() + ("0" + (m.getMonth() + 1)).slice(-2) + ("0" + m.getDate()).slice(-2);
 
-  configProd.set("VUE_APP_VERSION", version + '-' + date + '-dev');
+  // configProd.set("VUE_APP_VERSION", version + '-' + date + '-dev');
+  configProd.set("VUE_APP_VERSION", version + "-" + date);
   configProd.save(".env.production");
 }

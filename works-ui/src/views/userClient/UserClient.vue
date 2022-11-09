@@ -372,7 +372,7 @@ export default defineComponent({
         if (this.inputTextTarget !== undefined) this.inputTextTarget.blur();
         // console.log(this.display.getWidth(), this.display.getHeight());
         // console.log(this.appEl.offsetWidth, this.appEl.offsetHeight);
-        // this.resizeWindowEvent();
+        this.resizeWindowEvent();
       };
       this.display.onresize = (x, y) => {
         //console.log(this.appEl.offsetWidth, this.appEl.offsetHeight);
@@ -920,7 +920,7 @@ export default defineComponent({
       this.client.sendSize(width, height);
 
       // 세팅 drawer 높이 변경
-      console.log("width :>> ", window.innerWidth);
+      // console.log("width :>> ", window.innerWidth, "height :>> ", window.innerHeight);
       if (window.innerWidth > 1190) this.drawerHeight = 120;
       else if (window.innerWidth > 715 && window.innerWidth <= 1190) this.drawerHeight = 200;
       else if (window.innerWidth > 500 && window.innerWidth <= 715) this.drawerHeight = 280;
@@ -948,14 +948,16 @@ export default defineComponent({
         else if (this.display.getScale() > this.$store.state.client.maxScale) this.$store.state.client.scale = this.$store.state.client.maxScale;
         else this.$store.state.client.scale = this.$store.state.client.minScale;
 
-        // console.log(
-        //   this.display.getScale(),
-        //   store.state.client.minScale,
-        //   "  :::::::::: ",
-        //   store.state.client.maxScale,
-        //   store.state.client.scale
-        // );
-      }, 2000);
+
+        this.$refs.userClientSetting.setScale();
+      //   console.log(
+      //     this.display.getScale(),
+      //     this.$store.state.client.minScale,
+      //     "  :::::::::: ",
+      //     this.$store.state.client.maxScale,
+      //     this.$store.state.client.scale
+      //   );
+      }, 3000);
     },
     inputTextChange() {
       if (this.composingText) return;
