@@ -332,6 +332,8 @@
   "label.move.parent": "Move Parent Folder",
   "label.batch.download": "Batch Download",
   "label.dcvm.connect": "Connect Controller Server",
+  "label.used": "Used",
+  "label.reserved": "Reserved",
 
   "label.policy.desc.enable.menu.animations": "Whether start menu opening and closing animations are allowed",
   "label.policy.desc.enable.desktop.composition": "whether graphic effects such as transparent windows and shadows are allowed",

@@ -210,7 +210,7 @@ export default defineComponent({
           title: this.$t("label.description"),
           dataIndex: "description",
           key: "description",
-          width: "15%",
+          width: "30%",
           sorter: (a, b) => (a.description < b.description ? -1 : a.description > b.description ? 1 : 0),
           sortDirections: ["descend", "ascend"],
         },

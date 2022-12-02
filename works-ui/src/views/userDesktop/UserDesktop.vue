@@ -454,6 +454,18 @@ export default defineComponent({
             liteParamArr["port"] = liteParamArr.rdp_port;
             liteParamArr["username"] = sessionStorage.getItem("userName");
             liteParamArr["domain"] = sessionStorage.getItem("domainName");
+            // liteParamArr["disable-copy"] = "false";
+            // liteParamArr["disable-paste"] = "false";
+            // liteParamArr["initial-program"] = "c:\\Windows\\system32\\calc.exe";
+
+            // liteParamArr["remote-app"] = "calc.exe";
+            // liteParamArr["remote-app-dir"] = "c:\\Windows\\system32";
+            // liteParamArr["remote-app"] = "mspaint.exe";
+            // liteParamArr["remote-app-dir"] = "c:\\Windows\\system32";
+            liteParamArr["remote-app"] = "Rebirth.exe";
+            liteParamArr["remote-app-dir"] = "c:\\NewGen\\Rebirth";
+
+
             // liteParamArr["enable-touch"] = true;
             // console.log(liteParamArr);
 

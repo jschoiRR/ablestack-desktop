@@ -89,11 +89,42 @@
     <div class="CardItem">
       <div class="ItemName">{{ $t("label.vm.cpu.size") }}</div>
       <div class="Item">{{ resource.instanceMoldInfo.virtualmachine[0].cputotal }}</div>
-      <a-progress :percent="parseFloat(resource.instanceMoldInfo.virtualmachine[0].cpuused.split('%')[0])" size="small" status="active" style="width: 97%" />
+      <a-progress
+        class="progress-bar"
+        size="small"
+        status="active"
+        :percent="parseFloat(resource.instanceMoldInfo.virtualmachine[0].cpuused.split('%')[0])"
+        :format="(percent, successPercent) => parseFloat(percent).toFixed(2) + '% ' + $t('label.used')"
+      />
     </div>
     <div class="CardItem">
       <div class="ItemName">{{ $t("label.vm.memory.size") }}</div>
       <div class="Item">{{ resource.instanceMoldInfo.virtualmachine[0].memory }} MB</div>
+      <span v-if="resource.instanceMoldInfo.virtualmachine[0].memorykbs && resource.instanceMoldInfo.virtualmachine[0].memoryintusablekbs">
+        <a-progress
+          class="progress-bar"
+          size="small"
+          status="active"
+          :percent="
+            Number(
+              parseFloat(
+                (100.0 * (resource.instanceMoldInfo.virtualmachine[0].memorykbs - resource.instanceMoldInfo.virtualmachine[0].memoryintusablekbs)) /
+                  resource.instanceMoldInfo.virtualmachine[0].memorykbs
+              ).toFixed(2)
+            )
+          "
+          :format="(percent, successPercent) => parseFloat(percent).toFixed(2) + '% ' + $t('label.used')"
+        />
+      </span>
+      <span v-if="resource.instanceMoldInfo.virtualmachine[0].memorykbs && resource.instanceMoldInfo.virtualmachine[0].memoryintfreekbs">
+        <a-progress
+          class="progress-bar"
+          size="small"
+          status="active"
+          :percent="Number(parseFloat((100.0 * resource.instanceMoldInfo.virtualmachine[0].memoryintfreekbs) / resource.instanceMoldInfo.virtualmachine[0].memorykbs).toFixed(2))"
+          :format="(percent, successPercent) => parseFloat(percent).toFixed(2) + '% ' + $t('label.reserved')"
+        />
+      </span>
     </div>
     <div class="CardItem">
       <div class="ItemName">{{ $t("label.vm.disk.size") }}</div>
@@ -169,6 +200,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.progress-bar {
+  padding-right: 60px;
+  width: 100%;
+}
 .CardItem {
   margin-bottom: 20px;
 }

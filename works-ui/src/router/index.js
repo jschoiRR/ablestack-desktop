@@ -19,6 +19,7 @@ import VirtualMachineDetail from "../views/virtualMachine/VirtualMachineDetail.v
 import Workspace from "../views/workSpace/WorkSpace.vue";
 import WorkspaceDetail from "../views/workSpace/WorkSpaceDetail.vue";
 import UserClient from "@/views/userClient/UserClient.vue";
+import RequestDesktop from "@/views/demo/RequestDesktop.vue";
 
 // import Audit from "../views/audit/Audit.vue";
 // import AuditDetail from "../views/audit/AuditDetail.vue";
@@ -168,6 +169,11 @@ const routes = [
         component: Login,
       },
     ],
+  },
+  {
+    path: "/RD",
+    name: "RD",
+    component: RequestDesktop,
   },
   {
     path: "/admin",

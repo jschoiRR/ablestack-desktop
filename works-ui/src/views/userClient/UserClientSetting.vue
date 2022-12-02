@@ -486,22 +486,15 @@ export default defineComponent({
         // Start download
         stream.sendAck("OK", Guacamole.Status.Code.SUCCESS);
 
-        const arrayBufferReader = new Guacamole.ArrayBufferReader(stream);
-        var chunks = [];
-
-        var siz = 0;
+        const dur = new Guacamole.DataURIReader(stream, mimetype);
+        const arrAsync = [];
+        const br = new Guacamole.BlobReader(stream, mimetype);
         const key = filename;
-
-        // stream buffer 데이터 받음
-        arrayBufferReader.ondata = (buffer) => {
-          const bufBlob = new Blob([buffer], { type: mimetype });
-          chunks.push(bufBlob);
-
-          siz = siz + bufBlob.size;
+        br.onprogress = (length) => {
           _this.$notification.open({
             key,
             message: _this.$t("label.file.download"),
-            description: "[" + _this.bytesToSize(siz) + "] " + filename,
+            description: "[" + _this.bytesToSize(br.getLength()) + "] " + filename,
             placement: "bottomRight",
             duration: 0,
             style: {
@@ -511,29 +504,86 @@ export default defineComponent({
               _this.$notification.close(key);
             },
           });
-
-          stream.sendAck("OK", Guacamole.Status.Code.SUCCESS);
+          stream.sendAck("onfile_Received", Guacamole.Status.Code.SUCCESS);
         };
 
-        //stream 이 끝났을 시
-        arrayBufferReader.onend = () => {
-          _this.$notification.open({
-            key,
-            message: _this.$t("label.file.download"),
-            description: "[" + _this.$t("label.complete") + "] " + filename,
-            placement: "bottomRight",
-            duration: 5,
-            style: {
-              width: "400px",
-            },
-            onClose: () => {
-              _this.$notification.close(key);
-            },
-          });
-          const blob = new Blob(chunks, { type: mimetype });
-          const url = URL.createObjectURL(blob);
-          _this.downloadFile(url, filename);
+        br.onend = () => {
+          // console.log("000000000 :>> " + new Date());
+
+          const url = URL.createObjectURL(br.getBlob());
+          arrAsync.push(_this.downloadFile(url, filename));
+          // console.log("11111111111111 :>> " + new Date());
+          Promise.all(arrAsync)
+            .then(() => {
+              _this.$notification.open({
+                key,
+                message: _this.$t("label.file.download"),
+                description: "[" + _this.$t("label.complete") + "] " + filename,
+                placement: "bottomRight",
+                duration: 5,
+                style: {
+                  width: "400px",
+                },
+                onClose: () => {
+                  _this.$notification.close(key);
+                },
+              });
+            })
+            .catch((error) => {
+              console.log("error :>> ", error);
+            })
+            .finally(() => {});
         };
+
+
+
+        // const arrayBufferReader = new Guacamole.ArrayBufferReader(stream);
+        // var chunks = [];
+        // var siz = 0;
+        // const key = filename;
+
+        // // stream buffer 데이터 받음
+        // arrayBufferReader.ondata = (buffer) => {
+        //   const bufBlob = new Blob([buffer], { type: mimetype });
+        //   chunks.push(bufBlob);
+
+        //   siz = siz + bufBlob.size;
+        //   _this.$notification.open({
+        //     key,
+        //     message: _this.$t("label.file.download"),
+        //     description: "[" + _this.bytesToSize(siz) + "] " + filename,
+        //     placement: "bottomRight",
+        //     duration: 0,
+        //     style: {
+        //       width: "400px",
+        //     },
+        //     onClose: () => {
+        //       _this.$notification.close(key);
+        //     },
+        //   });
+
+        //   stream.sendAck("OK", Guacamole.Status.Code.SUCCESS);
+        // };
+
+        // //stream 이 끝났을 시
+        // arrayBufferReader.onend = () => {
+        //   _this.$notification.open({
+        //     key,
+        //     message: _this.$t("label.file.download"),
+        //     description: "[" + _this.$t("label.complete") + "] " + filename,
+        //     placement: "bottomRight",
+        //     duration: 5,
+        //     style: {
+        //       width: "400px",
+        //     },
+        //     onClose: () => {
+        //       _this.$notification.close(key);
+        //     },
+        //   });
+        //   const blob = new Blob(chunks, { type: mimetype });
+        //   const url = URL.createObjectURL(blob);
+        //   _this.downloadFile(url, filename);
+        // };
       });
     },
     batchFileDownAction() {

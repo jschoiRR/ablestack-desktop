@@ -6,11 +6,7 @@
     :data-source="userDataList"
     :bordered="false"
     style="overflow-y: auto; overflow: auto"
-    :pagination="{
-      change: (page, pageSize) => {
-        this.state.selectedRowKeys = [];
-      },
-    }"
+    :pagination="pagination"
     :row-selection="{
       selectedRowKeys: state.selectedRowKeys,
       onChange: onSelectChange,
@@ -100,17 +96,11 @@ export default defineComponent({
       actionFrom: ref(""),
       timer: ref(null),
       pagination: {
-        // pageSize: ref(20),
+        // pageSize: 10,
         showSizeChanger: true, // display can change the number of pages per page
         pageSizeOptions: ["10", "20", "50", "100", "200"], // number of pages per option
         showTotal: (total) => this.$t("label.total") + ` ${total}` + this.$t("label.items"), // show total
-        change: (page, pageSize) => {
-          this.state.selectedRowKeys = [];
-        },
-        showSizeChange: (current, pageSize) => {
-          // console.log(current, pageSize);
-          this.pageSize = pageSize;
-        }, // update display when changing the number of pages per page
+        // showSizeChange: (current, pageSize) => (this.pageSize = pageSize), // update display when changing the number of pages per page
       },
       userDataList: ref([]),
       UserListColumns: [

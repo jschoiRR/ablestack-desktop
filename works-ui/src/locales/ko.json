@@ -332,6 +332,8 @@
   "label.move.parent": "상위폴더 이동",
   "label.batch.download": "일괄 다운로드",
   "label.dcvm.connect": "컨트롤러 서버 접속",
+  "label.used": "사용",
+  "label.reserved": "예약",
 
   "label.policy.desc.enable.menu.animations": "시작 메뉴 열기 및 닫기 애니메이션이 허용 여부",
   "label.policy.desc.enable.desktop.composition": "투명한 창 및 그림자와 같은 그래픽 효과가 허용 여부",
